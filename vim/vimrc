@@ -1,0 +1,12 @@
+" Enable syntax highlighting
+syntax enable
+
+" Set spaces for tabstops
+"set tabstop=2
+
+" Line numbers?
+set number
+
+" Search
+set hlsearch
+set incsearch
