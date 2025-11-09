@@ -61,6 +61,35 @@ alias pyenv='
   pyenv
 '
 
+#### Conda
+_conda_init() {
+    __conda_setup="$('/opt/homebrew/Caskroom/miniforge/base/bin/conda' 'shell.zsh' 'hook' 2> /dev/null)"
+    if [ $? -eq 0 ]; then
+        eval "$__conda_setup"
+    else
+        if [ -f "/opt/homebrew/Caskroom/miniforge/base/etc/profile.d/conda.sh" ]; then
+            . "/opt/homebrew/Caskroom/miniforge/base/etc/profile.d/conda.sh"
+        else
+            export PATH="/opt/homebrew/Caskroom/miniforge/base/bin:$PATH"
+        fi
+    fi
+    unset __conda_setup
+}
+
+# Only initialize Conda if the user runs 'conda'
+conda() {
+    _conda_init
+    unset -f conda
+    command conda "$@"
+}
+
 #### LM Studio
 # Add LM Studio to the path
 export PATH="$PATH:$HOME/.lmstudio/bin"
+
+# Add .local/bin -> for Rust
+export PATH="$HOME/.local/bin:$PATH"
+
+# atuin
+. "$HOME/.atuin/bin/env"
+eval "$(atuin init zsh)"
